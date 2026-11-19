@@ -119,7 +119,7 @@ Fallback if live entry fails: the report already tells the story on loaded data,
 - **Meeting time:** will it move (Faizan's request to Connor)?
 - **Scope fence:** don't demo the Textura integration, PO vendor restriction (Wesco-only jobs), or AIA G702/G703 print. If
   asked, these are implementation-design items from the briefing.
-- **Loss jobs:** we flag projected losses (ASC 606 recognises the full loss now) but don't post a loss provision.
+- **Loss jobs:** we flag projected losses (US GAAP recognises the full loss now) but don't post a loss provision.
   Fine for the demo?
 
 ## 7. Draft email to Dillon (send from your account)

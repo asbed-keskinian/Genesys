@@ -33,3 +33,4 @@ for the Fri 20 Nov 10:00 ET workshop. Plan: docs/PLAN.md. Open items: docs/OPEN_
 - Reset after rehearsal: deleted the bill, invoice and WIP JE (+ its auto-reversal), restored 01-00170; totals back to 19,730,000 / 13,323,336 / 12,645,000 / 988,336 / 310,000.
 - Code from the rehearsal (deploy 5): WIP JE reverses on the 1st of next month (was next day); report table placed below the filters (full width); Reset reports auto-reversals as already removed.
 | 5 | 2026-11-19 | WIP JE reverses 1st of next month; report table full width below filters; Reset notes auto-reversals. Verified in account, then Reset. |
+| 6 | 2026-11-19 | Report note: loss recognition worded "under US GAAP" (was ASC 606) - to deploy |

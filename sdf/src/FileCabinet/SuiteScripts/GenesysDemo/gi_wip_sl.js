@@ -104,7 +104,7 @@ define(['N/ui/serverWidget', 'N/url', 'N/record', 'N/search', 'N/runtime', 'N/re
         const note = `<div class="gi-note">Percent complete = job-to-date cost / estimated cost (cost-to-cost). Earned revenue = percent complete x contract value.
             Costs come from posted vendor bills, labour journals and expense reports coded to the project; billings from posted invoices and credit memos on the project.
             Contract value and estimated cost are maintained on the project record by the project manager.
-            ${losses.length ? `<br><b>Projected losses:</b> ${losses.map((r) => `${esc(r.job)} ${money(r.estGP)}`).join(', ')} - under ASC 606 the full expected loss is recognised now, not as work is performed.` : ''}</div>`;
+            ${losses.length ? `<br><b>Projected losses:</b> ${losses.map((r) => `${esc(r.job)} ${money(r.estGP)}`).join(', ')} - under US GAAP the full expected loss is recognised now, not as work is performed.` : ''}</div>`;
         return `${CSS}<div class="gi-wrap">${kpis}<div style="overflow:auto;max-height:640px"><table class="gi">${head}${body}${tot}</table></div>${note}</div>`;
     }
 
