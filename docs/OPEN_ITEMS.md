@@ -19,3 +19,4 @@
 - Prior-years revenue is computed from cost at prior year-end x current estimate (template carries last year's figures); say so if asked
 - Loss jobs are flagged, no loss provision posted
 - No pricing in our segment
+- Only one NetSuite session per user: stay signed in to TD3137966 in one browser during the demo (signing in elsewhere logs the other session out)

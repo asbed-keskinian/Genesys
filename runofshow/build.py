@@ -113,13 +113,13 @@ SEG.append(("The WIP schedule", 14,
    "If the bank or the PE firm wants the WIP as a spreadsheet, it's one click, with the same columns as today's file."),
   (8, "Book the over and under billing", "WIP journal", "B",
    "Click <b>Post WIP Adjustment JE</b>. On the journal: debit <b>Costs & Est. Earnings in Excess of Billings</b> and credit revenue per under-billed job; debit revenue and credit <b>Billings in Excess</b> per over-billed job; Reversal Date = the 1st of next month. Open the <b>GL Impact</b> subtab if asked.",
-   "Month end: one click books the contract asset and contract liability from the schedule, job by job, and reverses on the first of next month, so the balance sheet and the income statement agree with the WIP without a manual journal."),
+   "Month end: one click books the contract asset and contract liability from the schedule, job by job, and reverses on the first of next month, so the balance sheet and the income statement agree with the WIP without a manual journal. If more costs or billings come in before close, clicking again replaces it with the latest figures."),
   (9, "Project profitability", "Profitability", "D",
    "—",
    "Because cost and revenue post to the job, NetSuite's project profitability and Project Center work on the same data once Project Management is switched on (it is off in this generic account). The WIP schedule is the accountant's view; profitability is the PM's view of the same job."),
  ],
  "Cost-to-cost percent complete; over/under billing; contract asset and liability; reversing journals; project profitability; saved searches and Excel export.",
- "If the CFO consultant asks about prior years: the schedule calculates prior-year revenue from cost at last year-end and today's estimate. Excel carries last year's figures forward; in implementation we would snapshot the year-end WIP. The Status column shows today's status even on the year-end view (01-00079 shows Closed at last year-end). The JE button posts once per date; Reset removes it and its reversal."))
+ "If the CFO consultant asks about prior years: the schedule calculates prior-year revenue from cost at last year-end and today's estimate. Excel carries last year's figures forward; in implementation we would snapshot the year-end WIP. The Status column shows today's status even on the year-end view (01-00079 shows Closed at last year-end). Post the WIP journal last, after the bill, pay app and estimate change. Clicking the button again for the same date replaces the journal (and its reversal) with the latest figures; Reset removes it."))
 
 SEG.append(("Wrap-up and hand back", 3,
  "What was standard, what was built, and what comes next.",

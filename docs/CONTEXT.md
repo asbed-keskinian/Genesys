@@ -34,3 +34,4 @@ for the Fri 20 Nov 10:00 ET workshop. Plan: docs/PLAN.md. Open items: docs/OPEN_
 - Code from the rehearsal (deploy 5): WIP JE reverses on the 1st of next month (was next day); report table placed below the filters (full width); Reset reports auto-reversals as already removed.
 | 5 | 2026-11-19 | WIP JE reverses 1st of next month; report table full width below filters; Reset notes auto-reversals. Verified in account, then Reset. |
 | 6 | 2026-11-19 | Report note: loss recognition worded "under US GAAP" (was ASC 606). Deployed and checked in the account. |
+| 7 | 2026-11-19 | WIP JE button: clicking again for the same date replaces the journal and its reversal with the latest figures. Tested (01-00170 line 191,546.96 -> 104,059.41 after estimate change), then Reset. |

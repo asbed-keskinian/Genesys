@@ -148,8 +148,8 @@ define(['N/ui/serverWidget', 'N/url', 'N/record', 'N/search', 'N/runtime', 'N/re
         const cfg = lib.loadConfig();
         if (!cfg || !cfg.accounts) throw new Error('Run the Genesys demo setup first (gi_config.json not found).');
         const ext = `GI-WIPJE-${asOf.replace(/-/g, '')}`;
-        const existing = findJe(ext);
-        if (existing) return existing;
+        // Re-posting for the same date replaces the earlier journal with the latest figures.
+        // Deleting the original also removes its automatic reversal.
         const rep = lib.buildReport(asOf);
         const lines = [];
         rep.rows.forEach((r) => {
@@ -163,6 +163,11 @@ define(['N/ui/serverWidget', 'N/url', 'N/record', 'N/search', 'N/runtime', 'N/re
             }
         });
         if (!lines.length) throw new Error('Nothing to post: no over or under billing at this date.');
+        const existing = findJe(ext);
+        if (existing) {
+            record.delete({ type: record.Type.JOURNAL_ENTRY, id: existing });
+            log.audit('WIP JE replaced', `Deleted ${existing} for ${asOf}`);
+        }
         const je = record.create({ type: record.Type.JOURNAL_ENTRY });
         if (cfg.subsidiary) je.setValue('subsidiary', cfg.subsidiary);
         je.setValue('trandate', new Date(Number(asOf.slice(0, 4)), Number(asOf.slice(5, 7)) - 1, Number(asOf.slice(8, 10))));
