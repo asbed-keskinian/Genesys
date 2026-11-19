@@ -166,7 +166,8 @@ define(['N/ui/serverWidget', 'N/url', 'N/record', 'N/search', 'N/runtime', 'N/re
         const je = record.create({ type: record.Type.JOURNAL_ENTRY });
         if (cfg.subsidiary) je.setValue('subsidiary', cfg.subsidiary);
         je.setValue('trandate', new Date(Number(asOf.slice(0, 4)), Number(asOf.slice(5, 7)) - 1, Number(asOf.slice(8, 10))));
-        const rev = new Date(Number(asOf.slice(0, 4)), Number(asOf.slice(5, 7)) - 1, Number(asOf.slice(8, 10)) + 1);
+        // reverses on the first day of the next month (standard month-end WIP entry)
+        const rev = new Date(Number(asOf.slice(0, 4)), Number(asOf.slice(5, 7)), 1);
         try { je.setValue('reversaldate', rev); } catch (e) { log.audit('reversaldate not set', e.message); }
         je.setValue('memo', `WIP over/under billing adjustment as of ${asOf} (auto-reverses ${lib.ymd(rev)})`);
         je.setValue('externalid', ext);
@@ -235,7 +236,9 @@ define(['N/ui/serverWidget', 'N/url', 'N/record', 'N/search', 'N/runtime', 'N/re
             functionName: `(function(){document.getElementById('custpage_action').value='postje';(document.getElementById('main_form')||document.forms[0]).submit();})` });
 
         const rep = lib.buildReport(asOf, status);
-        form.addField({ id: 'custpage_html', type: ui.FieldType.INLINEHTML, label: ' ' }).defaultValue = reportHtml(rep, status);
+        const html = form.addField({ id: 'custpage_html', type: ui.FieldType.INLINEHTML, label: ' ' });
+        html.updateLayoutType({ layoutType: ui.FieldLayoutType.OUTSIDEBELOW });
+        html.defaultValue = reportHtml(rep, status);
         ctx.response.writePage(form);
     }
 

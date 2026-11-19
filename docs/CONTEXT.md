@@ -21,3 +21,15 @@ for the Fri 20 Nov 10:00 ET workshop. Plan: docs/PLAN.md. Open items: docs/OPEN_
 | 2 | 2026-11-19 | Loader: one-query external-ID preload, usage budget with Continue |
 | 3 | 2026-11-19 | Report: job no. from external ID, client/description clean-up, status filter |
 | 4 | 2026-11-19 | Report: rows sorted by job no. |
+
+## Status at end of 19 Nov
+- Account reset to starting figures (19,730,000 / 13,323,336 / 12,645,000 / 988,336 / 310,000); ready for the demo. Run-of-show: runofshow/genesys-run-of-show.html.
+
+## Rehearsal, 19 Nov (Claude, in the built-in browser)
+- Ran every live step: Westline bill $180,000 on 01-00177, pay app $350,000 on 01-00152, estimate 905,000 -> 1,010,000 on 01-00170, refresh, drill-down, year-end view, CSV export, WIP JE. All figures matched the run-of-show.
+- Account quirks found: no locations existed, so created **Genesys HQ (DEMO)** (location id 1007); the SkyHop bill form needs Location on the header and on every expense line (client-script alert); invoices need header Location. Line Customer is a dropdown (pick from list).
+- Customer "Allow Override" (ticked by the user in Auto-Generated Numbers) let Reset set job IDs to 01-00044..01-00177 on the records too.
+- Project Management is off in this account (record is "Job", no profitability subtab), so 3.9 is Described.
+- Reset after rehearsal: deleted the bill, invoice and WIP JE (+ its auto-reversal), restored 01-00170; totals back to 19,730,000 / 13,323,336 / 12,645,000 / 988,336 / 310,000.
+- Code from the rehearsal (deploy 5): WIP JE reverses on the 1st of next month (was next day); report table placed below the filters (full width); Reset reports auto-reversals as already removed.
+| 5 | 2026-11-19 | WIP JE reverses 1st of next month; report table full width below filters; Reset notes auto-reversals. Verified in account, then Reset. |

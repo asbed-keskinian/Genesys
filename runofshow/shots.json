@@ -1,0 +1,29 @@
+{
+ "1_1_a": {
+  "caption": "Jobs list: the twelve jobs under four general contractors, with contract value, estimate and state"
+ },
+ "1_2_a": {
+  "caption": "Job 01-00177, Custom subtab: Contract Value, Estimated Total Cost, Job State, Include on WIP Schedule"
+ },
+ "2_1_a": {
+  "caption": "Westline bill: header and line Location Genesys HQ (DEMO), $180,000 to 5950 Job Cost - Materials, Customer = 01-00177"
+ },
+ "2_3_a": {
+  "caption": "Pay application 10 on 01-00152: GI Progress Billing (AIA), $350,000, Location Genesys HQ (DEMO)"
+ },
+ "3_2_a": {
+  "caption": "After the bill and pay app: earned $13,537,500, billed $12,995,000, under-billed $852,500 (rehearsal, before the table was moved below the filters)"
+ },
+ "3_3_a": {
+  "caption": "Drill-down: 01-00177 job-to-date costs, including the Westline bill entered live"
+ },
+ "3_6_a": {
+  "caption": "As of 12/31 last year: the eight jobs open at year-end"
+ },
+ "3_8_a": {
+  "caption": "WIP adjustment journal at the starting figures: contract asset / liability per job, reversing 1 December"
+ },
+ "3_1_a": {
+  "caption": "WIP schedule at the start of the demo: the template columns, tiles and totals (contract $19.73M, earned $13.32M, billed $12.65M)"
+ }
+}

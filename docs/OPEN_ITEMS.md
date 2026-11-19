@@ -8,8 +8,10 @@
 - [x] Deploy 4: WIP rows sorted by job no.
 - [x] Deploy 1
 - [x] Load, totals checked, runofshow/ids.json written, run-of-show rebuilt with live links
-- [ ] Screenshots into runofshow/shots (same naming as Värde: <seg>_<step>_a.jpg)
-- [ ] Rehearse segments 2-3, then Reset
+- [x] Screenshots (8) in runofshow/shots with captions in shots.json
+- [x] Rehearsed segments 1-3 end to end, then Reset (see CONTEXT.md)
+- [x] Deploy 5: verified full-width report layout and JE reversal 1 Dec (test JE posted, then Reset); screenshots 3_1 and 3_8 retaken
+- [ ] Before the demo: open GI Demo Setup, Reset preview should be empty; present the report full-screen
 - [ ] Email Dillon (draft in docs/PLAN.md section 7); confirm handoff point and slot length (60 vs 90 min)
 - [x] GitHub: asbed-keskinian/Genesys
 

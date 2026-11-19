@@ -289,7 +289,10 @@ define(['N/ui/serverWidget', 'N/record', 'N/search', 'N/query', 'N/file', 'N/run
         const rows = resetCandidates(cfg);
         DELETE_ORDER.forEach((type) => rows.filter((r) => r.type === type).forEach((r) => {
             try { record.delete({ type: DELETE_TYPES[type], id: r.id }); note(`Deleted ${type} ${r.tranid || r.id}`); }
-            catch (e) { note(`Could not delete ${type} ${r.tranid || r.id}: ${e.message}`); }
+            catch (e) {
+                if (/does not exist/i.test(e.message)) note(`${type} ${r.tranid || r.id} already removed (auto-reversal of a deleted journal)`);
+                else note(`Could not delete ${type} ${r.tranid || r.id}: ${e.message}`);
+            }
         }));
         rows.filter((r) => DELETE_ORDER.indexOf(r.type) < 0)
             .forEach((r) => note(`Left in place (type ${r.type} not handled): ${r.tranid || r.id}`));
