@@ -5,6 +5,8 @@
     <features>
       <feature required="true">SERVERSIDESCRIPTING</feature>
       <feature required="true">JOBS</feature>
+      <feature required="false">CRM</feature>
+      <feature required="false">ACCOUNTING</feature>
     </features>
   </dependencies>
 </manifest>
