@@ -210,8 +210,12 @@ define(['N/ui/serverWidget', 'N/url', 'N/record', 'N/search', 'N/runtime', 'N/re
         const form = ui.createForm({ title: 'Genesys Impact - WIP Schedule' });
         if (P.action === 'detail') {
             const rows = lib.getDetail(P.job, P.kind, asOf);
-            const jobName = (search.lookupFields({ type: search.Type.JOB, id: P.job, columns: ['entityid', 'companyname'] }));
-            const title = `${jobName.entityid} ${jobName.companyname} - ${P.kind === 'cost' ? 'job-to-date costs' : 'billings to date'} through ${asOf}`;
+            let jobName;
+            try { jobName = search.lookupFields({ type: search.Type.JOB, id: P.job, columns: ['entityid', 'companyname', 'externalid'] }); }
+            catch (e) { jobName = search.lookupFields({ type: search.Type.JOB, id: P.job, columns: ['entityid', 'companyname'] }); }
+            const ext = Array.isArray(jobName.externalid) ? (jobName.externalid[0] || {}).text : jobName.externalid;
+            const no = /^GI-JOB-/.test(ext || '') ? ext.slice(7) : jobName.entityid;
+            const title = `${no} ${String(jobName.companyname || '').split(' : ').pop()} - ${P.kind === 'cost' ? 'job-to-date costs' : 'billings to date'} through ${asOf}`;
             form.addField({ id: 'custpage_html', type: ui.FieldType.INLINEHTML, label: ' ' })
                 .defaultValue = detailHtml(rows, title, selfUrl({ asof: asOf, status }));
             ctx.response.writePage(form);
@@ -221,7 +225,7 @@ define(['N/ui/serverWidget', 'N/url', 'N/record', 'N/search', 'N/runtime', 'N/re
         const fAsOf = form.addField({ id: 'custpage_asof', type: ui.FieldType.DATE, label: 'As of' });
         fAsOf.defaultValue = format.format({ value: new Date(Number(asOf.slice(0, 4)), Number(asOf.slice(5, 7)) - 1, Number(asOf.slice(8, 10))), type: format.Type.DATE });
         const fStatus = form.addField({ id: 'custpage_status', type: ui.FieldType.SELECT, label: 'Job status' });
-        [['', 'All jobs'], ['progress', 'In progress only'], ['complet', 'Completed only']]
+        [['', 'All jobs'], ['progress', 'In progress only'], ['done', 'Completed / closed only']]
             .forEach((o) => fStatus.addSelectOption({ value: o[0], text: o[1], isSelected: o[0] === status }));
         form.addField({ id: 'custpage_action', type: ui.FieldType.TEXT, label: 'action' }).updateDisplayType({ displayType: ui.FieldDisplayType.HIDDEN });
         form.addField({ id: 'custpage_asof_iso', type: ui.FieldType.TEXT, label: 'asof' }).updateDisplayType({ displayType: ui.FieldDisplayType.HIDDEN }).defaultValue = asOf;

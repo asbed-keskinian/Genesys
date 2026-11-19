@@ -35,7 +35,7 @@ def sl(script, deploy, q=""): return f"/app/site/hosting/scriptlet.nl?script={sc
 
 WIP = sl("customscript_gi_wip_sl", "customdeploy_gi_wip_sl")
 SETUP = sl("customscript_gi_setup_sl", "customdeploy_gi_setup_sl")
-PROJECTS = "/app/common/entity/custjoblist.nl"
+PROJECTS = "/app/accounting/project/projects.nl"
 J = lambda n: JOB.get(n)
 
 FIT = {
@@ -58,9 +58,9 @@ SEG = []
 SEG.append(("Jobs on the project record", 5,
  "A Genesys job is a standard NetSuite project under the general contractor, carrying the contract value and the PM's estimate that drive WIP.",
  [
-  (1, "The job list", "Projects", "N",
-   f"{L('Projects list', PROJECTS)}: the twelve jobs 01-00044 to 01-00177 under four general contractors.",
-   "Each construction job is a project under the general contractor it works for, numbered the way you number jobs today. When a job is won in HubSpot, the award comes across with contract value, projected costs and resources, and accounting sets the project up from a template."),
+  (1, "The job list", "Jobs", "N",
+   f"{L('Jobs list', PROJECTS)}: the twelve jobs under four general contractors, with Contract Value, Estimated Total Cost and Job State as columns.",
+   "Each construction job is a project under the general contractor it works for, with its contract value and estimate right on the list. When a job is won in HubSpot, the award comes across with contract value, projected costs and resources, and accounting sets the project up from a template."),
   (2, "Contract value and estimate on the project", "WIP inputs", "B",
    f"Open {L('01-00177 Orlando Airport Terminal C', project(J('01-00177')))}: customer (Summit Ridge GC), status In Progress, start date, <b>Contract Value</b> $4,200,000, <b>Estimated Total Cost</b> $3,530,000, <b>Include on WIP Schedule</b>.",
    "Two numbers drive the WIP: the contract value, including approved change orders, and the project manager's current estimate of total cost at completion. They sit on the project record and the PM updates the estimate. Everything else — cost to date, billings to date — comes from transactions, so nobody re-keys it into a spreadsheet."),

@@ -25,6 +25,15 @@ define(['N/search', 'N/query', 'N/file', 'N/format'], (search, query, file, form
         catch (e) { return null; }
     }
 
+    // Job number in Genesys' format: the project ID if it has one, else the loader's GI-JOB-<no> external ID
+    // (accounts with auto-numbered projects override the ID we set).
+    function jobNo(entityid, ext) {
+        const id = String(entityid || '').split(' : ').pop();
+        if (/^\d{2}-\d{5}$/.test(id)) return id;
+        const m = /^GI-JOB-(.+)$/.exec(ext || '');
+        return m ? m[1] : id;
+    }
+
     /** WIP jobs: projects with "Include on WIP" ticked. */
     function getJobs() {
         const jobs = [];
@@ -33,15 +42,15 @@ define(['N/search', 'N/query', 'N/file', 'N/format'], (search, query, file, form
             filters: [['custentity_gi_wip_job', 'is', 'T'], 'AND', ['isinactive', 'is', 'F']],
             columns: [
                 search.createColumn({ name: 'entityid', sort: search.Sort.ASC }),
-                'companyname', 'customer', 'entitystatus', 'startdate',
+                'companyname', 'customer', 'entitystatus', 'startdate', 'externalid',
                 'custentity_gi_contract_value', 'custentity_gi_est_cost', 'custentity_gi_job_state'
             ]
         }).run().each((r) => {
             jobs.push({
                 id: r.id,
-                job: r.getValue('entityid'),
-                desc: r.getValue('companyname'),
-                client: (r.getText('customer') || '').replace(/\s*\(DEMO\)$/, ''),
+                job: jobNo(r.getValue('entityid'), r.getValue('externalid')),
+                desc: String(r.getValue('companyname') || '').split(' : ').pop(),
+                client: String(r.getText('customer') || '').split(' : ').pop().replace(/^\d+\s+/, '').replace(/\s*\(DEMO\)$/, ''),
                 status: r.getText('entitystatus'),
                 start: r.getValue('startdate'),
                 state: r.getValue('custentity_gi_job_state'),
@@ -50,7 +59,7 @@ define(['N/search', 'N/query', 'N/file', 'N/format'], (search, query, file, form
             });
             return true;
         });
-        return jobs;
+        return jobs.sort((a, b) => String(a.job).localeCompare(String(b.job)));
     }
 
     const inList = (ids) => ids.map((id) => Number(id)).filter((n) => n > 0).join(',') || '0';
@@ -131,7 +140,10 @@ define(['N/search', 'N/query', 'N/file', 'N/format'], (search, query, file, form
         // a job not yet started at the as-of date is left off (e.g. year-end view)
         const asOfDate = new Date(Number(asOf.slice(0, 4)), Number(asOf.slice(5, 7)) - 1, Number(asOf.slice(8, 10)));
         jobs = jobs.filter((j) => { const d = parseDate(j.start); return !d || d <= asOfDate; });
-        if (statusFilter) jobs = jobs.filter((j) => (j.status || '').toLowerCase().indexOf(statusFilter.toLowerCase()) >= 0);
+        if (statusFilter) {
+            const inProg = (j) => /progress|open|award|pending/i.test(j.status || '');
+            jobs = jobs.filter((j) => (statusFilter === 'progress' ? inProg(j) : !inProg(j)));
+        }
         const ids = jobs.map((j) => j.id);
         const costs = getCosts(ids, asOf, priorEnd);
         const bills = getBillings(ids, asOf);

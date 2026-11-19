@@ -39,7 +39,24 @@ define(['N/ui/serverWidget', 'N/record', 'N/search', 'N/query', 'N/file', 'N/run
     let log_ = [];
     const note = (s) => { log_.push(s); log.audit('GI setup', s); };
 
+    // External IDs already in the account, read once per run with SuiteQL (cheap) instead of a search per record.
+    const TABLE = { vendorbill: 'transaction', invoice: 'transaction', journalentry: 'transaction',
+        customer: 'customer', vendor: 'vendor', job: 'job', account: 'account', serviceitem: 'item' };
+    let extCache = null;
+    function preloadExt() {
+        extCache = {};
+        ['transaction', 'customer', 'vendor', 'job', 'account', 'item'].forEach((t) => {
+            try {
+                query.runSuiteQL({ query: `SELECT id, externalid FROM ${t} WHERE externalid LIKE 'GI-%'` }).asMappedResults()
+                    .forEach((r) => { extCache[`${t}|${r.externalid}`] = Number(r.id); });
+                extCache[`${t}|__ok`] = true;
+            } catch (e) { log.debug('preload skipped', `${t}: ${e.message}`); }
+        });
+    }
+
     function findByExt(type, ext) {
+        const t = TABLE[type];
+        if (extCache && t && extCache[`${t}|__ok`]) return extCache[`${t}|${ext}`] || null;
         let id = null;
         const filters = [['externalidstring', 'is', ext]];
         if (['vendorbill', 'invoice', 'journalentry'].indexOf(type) >= 0) filters.push('AND', ['mainline', 'is', 'T']);
@@ -51,9 +68,16 @@ define(['N/ui/serverWidget', 'N/record', 'N/search', 'N/query', 'N/file', 'N/run
         return id;
     }
 
+    // Suitelets get 1,000 usage units per request: stop cleanly before running out.
+    const MORE = 'GI_RUN_AGAIN';
+    function budget() {
+        if (runtime.getCurrentScript().getRemainingUsage() < 120) { const e = new Error('Usage budget for this run used up'); e.name = MORE; throw e; }
+    }
+
     function ensure(type, ext, build) {
         const found = findByExt(type, ext);
         if (found) return Number(found);
+        budget();
         const rec = record.create({ type });
         build(rec);
         rec.setValue('externalid', ext);
@@ -96,6 +120,7 @@ define(['N/ui/serverWidget', 'N/record', 'N/search', 'N/query', 'N/file', 'N/run
         const data = loadData();
         const now = new Date();
         const Y = now.getFullYear(), k = Y - BASE_YEAR;
+        preloadExt();
         const cfg = { loadedAt: now.toISOString(), year: Y, accounts: {}, vendors: {}, customers: {}, jobs: {} };
         if (isOW()) cfg.subsidiary = Number(runtime.getCurrentUser().subsidiary);
         const sub = (rec, multi) => { if (cfg.subsidiary) trySet(rec, 'subsidiary', multi ? [cfg.subsidiary] : cfg.subsidiary); };
@@ -138,6 +163,7 @@ define(['N/ui/serverWidget', 'N/record', 'N/search', 'N/query', 'N/file', 'N/run
             const ext = `GI-JOB-${j.job}`;
             const found = findByExt('job', ext);
             if (found) { cfg.jobs[j.job] = Number(found); return; }
+            budget();
             const rec = record.create({ type: record.Type.JOB });
             setJobFields(rec, j, cfg, statuses);
             rec.setValue('externalid', ext);
@@ -306,6 +332,10 @@ define(['N/ui/serverWidget', 'N/record', 'N/search', 'N/query', 'N/file', 'N/run
                     [['custpage_confirm', 'Confirm reset', 'resetconfirm']]);
             }
         } catch (e) {
+            if (e.name === MORE) {
+                return page(ctx, `<h3>Part done - run Load again to continue</h3>${list()}<p>NetSuite limits how much one page request can do; finished steps are skipped.</p>`,
+                    [['custpage_load', 'Continue loading', 'load']]);
+            }
             return page(ctx, `<h3 style="color:#b42318">Stopped: ${esc(e.name)} ${esc(e.message)}</h3>${list()}<p>Fix the cause and run again; finished steps are skipped.</p>`,
                 [['custpage_load', 'Run load again', 'load']]);
         }
