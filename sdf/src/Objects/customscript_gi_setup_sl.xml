@@ -1,0 +1,21 @@
+<suitelet scriptid="customscript_gi_setup_sl">
+  <description>Genesys Impact demo: load dummy data and reset after the demo.</description>
+  <isinactive>F</isinactive>
+  <name>GI Demo Setup</name>
+  <notifyowner>F</notifyowner>
+  <scriptfile>[/SuiteScripts/GenesysDemo/gi_setup_sl.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_gi_setup_sl">
+      <allemployees>F</allemployees>
+      <allpartners>F</allpartners>
+      <allroles>T</allroles>
+      <audslctrole></audslctrole>
+      <isdeployed>T</isdeployed>
+      <isonline>F</isonline>
+      <loglevel>DEBUG</loglevel>
+      <runasrole>ADMINISTRATOR</runasrole>
+      <status>RELEASED</status>
+      <title>GI Demo Setup</title>
+    </scriptdeployment>
+  </scriptdeployments>
+</suitelet>

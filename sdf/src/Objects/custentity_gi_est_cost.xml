@@ -1,0 +1,20 @@
+<entitycustomfield scriptid="custentity_gi_est_cost">
+  <accesslevel>2</accesslevel>
+  <appliestocontact>F</appliestocontact>
+  <appliestocustomer>F</appliestocustomer>
+  <appliestoemployee>F</appliestoemployee>
+  <appliestopartner>F</appliestopartner>
+  <appliestoproject>T</appliestoproject>
+  <appliestovendor>F</appliestovendor>
+  <defaultchecked>F</defaultchecked>
+  <description>Project manager's current estimate of total cost at completion; drives percent complete.</description>
+  <displaytype>NORMAL</displaytype>
+  <fieldtype>CURRENCY</fieldtype>
+  <help>Project manager's current estimate of total cost at completion; drives percent complete.</help>
+  <isformula>F</isformula>
+  <ismandatory>F</ismandatory>
+  <label>Estimated Total Cost</label>
+  <searchlevel>2</searchlevel>
+  <showinlist>T</showinlist>
+  <storevalue>T</storevalue>
+</entitycustomfield>

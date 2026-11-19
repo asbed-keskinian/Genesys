@@ -1,0 +1,21 @@
+<suitelet scriptid="customscript_gi_wip_sl">
+  <description>Genesys Impact demo: WIP schedule from projects and GL.</description>
+  <isinactive>F</isinactive>
+  <name>GI WIP Schedule</name>
+  <notifyowner>F</notifyowner>
+  <scriptfile>[/SuiteScripts/GenesysDemo/gi_wip_sl.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_gi_wip_sl">
+      <allemployees>F</allemployees>
+      <allpartners>F</allpartners>
+      <allroles>T</allroles>
+      <audslctrole></audslctrole>
+      <isdeployed>T</isdeployed>
+      <isonline>F</isonline>
+      <loglevel>DEBUG</loglevel>
+      <runasrole>ADMINISTRATOR</runasrole>
+      <status>RELEASED</status>
+      <title>GI WIP Schedule</title>
+    </scriptdeployment>
+  </scriptdeployments>
+</suitelet>
