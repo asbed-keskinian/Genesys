@@ -20,3 +20,14 @@
 - Loss jobs are flagged, no loss provision posted
 - No pricing in our segment
 - Only one NetSuite session per user: stay signed in to TD3137966 in one browser during the demo (signing in elsewhere logs the other session out)
+
+## After the demo (Fri 20 Nov) - WIP scope only
+Demo held 20 Nov 10:00 ET (Granola: https://notes.granola.ai/d/3295a8e0-3ead-4a15-b83e-9170d7af1f77). Dillon was out sick; we covered the WIP piece. Project management, budgets / quoting and estimating, change orders, procurement, inventory, T&M and MSP billing are Oracle's (Dillon, interactive session Tue 24 Nov, 4-5 PM, backup 12-1).
+- [ ] Retainage (committed on the call, "a couple of hours"): retention % column on each line of bills and invoices (10% default, often steps down to 8% / 5%); on save each line splits into a retainage receivable / retainage payable GL account; AR revenue stays at the full amount; release of retainage near the end of the job. Need from client: the retainage accounts and whether every line always splits.
+- [ ] WIP and retainage: decide whether JTD billings include retainage held, so over/under billing stays correct
+- [ ] Estimate source: once Oracle shows the native project budget, have the WIP read estimated cost from it instead of the custom Estimated Total Cost field
+- [ ] Configurable WIP formulas: client may send a second template with more formulas; offered to make formulas editable (with guards against divide-by-zero etc.)
+- [ ] Lock contract value and estimate once a job is In Progress, with an override checkbox for a named person (offered on the call)
+- [ ] Job cost to GL reconciliation: client asked how; showed the drill-down, offered additional GL reports
+- [ ] For Faizan's estimate: on the call we said retainage is a couple of hours, customisations are included with no upcharge, timeline 4-5 months
+- Note: the WIP JE posted on the call was as of 12/31/2026, so it reversed 1/1/2027 (1st of the next month); behaviour is correct
